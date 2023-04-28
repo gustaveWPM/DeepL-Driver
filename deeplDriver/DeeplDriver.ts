@@ -230,11 +230,11 @@ function tryToInitializeApiKey(
     return new Error(errorMsg);
   }
 
-  if (forcedValue) {
+  if (forcedValue !== undefined) {
     return forcedValue;
   }
 
-  if (configKey) {
+  if (configKey !== undefined) {
     return configKey;
   }
   throw errorBuilder(useCase);
@@ -285,7 +285,7 @@ function buildHeaders(
       legacyCtx,
       corsShSecretKey
     );
-    if (corsProxyPrefix && corsShApiSecretKey !== "") {
+    if (corsProxyPrefix !== undefined && corsShApiSecretKey !== "") {
       headers.append("x-cors-api-key", corsShApiSecretKey);
     }
   } catch (error) {
@@ -445,7 +445,8 @@ async function tryToProcessTokenizedOriginalInput(
       );
       const request = buildRequest(headers, body);
       const maxRetry = legacyCtx ? 1 : CORS_PROXY_MAX_RETRY;
-      for (let i: number = 0; i < maxRetry; i++) {
+      const doBreak = (n: number) => (n < maxRetry);
+      for (let i: number = 0; !doBreak(i); i++) {
         try {
           const tryToProcessFetchWrapper = async () => {
             const deeplOutput = await tryToProcessFetch(
@@ -460,7 +461,7 @@ async function tryToProcessTokenizedOriginalInput(
           }
           await tryToProcessFetchWrapper();
         } catch (error) {
-          if (i + 1 >= maxRetry) {
+          if (doBreak(i + 1)) {
             throw new Error("Failed to fetch");
           }
         }

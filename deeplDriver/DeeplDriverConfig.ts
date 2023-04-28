@@ -15,9 +15,8 @@ export const DEEPL_API_ROUTE_BASE: string = USING_DEEPL_FREE
 export const CORS_PROXY_MAX_RETRY: number = 5;
 export const RETRY_DELAY: number = 500;
 export const CORS_PROXY_PREFIX_FOR_RESCUE_CTX: string = "https://proxy.cors.sh/";
-
+export const CORS_SH_API_SECRET_AUTH_KEY: string = ""; // * ... Set this to "" if you don't need Cors.sh
 export const DEEPL_API_SECRET_AUTH_KEY: string | undefined = undefined;
-export const CORS_SH_API_SECRET_AUTH_KEY: string | undefined = undefined;
 
 enum AvailableLanguagesSymbols {
   "bg",
