@@ -78,7 +78,7 @@ function tryToValidateTextArgument(originalInput: DeeplDriverInputType) {
     return new Error(
       `Too big string! The maximum length of a DeepL text request is: ${DEEPL_API_MAX_DATA_CHUNK_SIZE}\n` +
         `But you tried to send a string with a length of: ${len}. (There are ${excess} character${
-          excess > 1 && "s"
+          excess > 1 ? "s" : ""
         } in excess.)\nSend it properly as an array or an object to the DeepL Driver, without any string bigger than ${DEEPL_API_MAX_DATA_CHUNK_SIZE} characters.\n\n` +
         `Concerned string: "${str}"`
     );
